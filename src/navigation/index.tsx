@@ -13,7 +13,9 @@ function AppNavigation() {
         component={MainScreen}
         options={{
           title: 'Music Latam',
-          headerShown: false,
+          headerShown: true,
+          headerTitleStyle: {color: 'white'},
+          headerStyle: {backgroundColor: 'black'},
         }}
       />
     </MainStack.Navigator>

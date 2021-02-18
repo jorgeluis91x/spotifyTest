@@ -2,7 +2,7 @@ import {call, fork, takeLatest, put} from 'redux-saga/effects';
 
 import {api} from '../../api';
 
-import {getProfile, saveProfile} from './actions';
+import {getPlaylists, getProfile, savePlaylists, saveProfile} from './actions';
 import {Profile} from './initial-state';
 
 /**
@@ -34,9 +34,12 @@ function* getProfileSaga() {
 
     // Handel successful response
     const body = result.data;
-    console.log('body', body);
     const profile: Profile = {
       display_name: body?.display_name,
+      country: body?.country,
+      followers: body?.follower,
+      email: body?.email,
+      product: body?.product,
     };
 
     yield put(saveProfile(profile));
@@ -62,6 +65,52 @@ function* getProfileSaga() {
 }
 
 /**
+ * Get Profile Saga
+ *
+ * @param {ReturnType<typeof getProfile>} {
+ *   payload,
+ * }
+ */
+
+function* getPlaylistsSaga() {
+  try {
+    const result: any = yield call(api.getPlaylists);
+    console.log('result', result);
+
+    /** one error */
+    if (!result.ok || !result.data) {
+      console.log('result', result);
+      // Show error modal
+      //do something
+      return;
+    }
+
+    // Handel successful response
+    const body = result.data;
+    yield put(savePlaylists(body.items));
+
+    /* const profile: Profile =
+      body??.value.map((item) => ({
+        imageUrl: item.ImageUrl,
+        targetUrl: item.TargetUrl,
+        rowKey: item.RowKey,
+        state: item.State,
+      })) || [];*/
+
+    /*  yield all([
+      // save data
+      put(saveSliders({sliders: sliders})),
+    ]);*/
+  } catch (error) {
+    // TODO: Error handler (error para mostrar modal)
+    console.error(error);
+  } finally {
+    // yield put(setAppLoading({isLoading: false}));
+  }
+}
+
+
+/**
  *
  * WATCHERS
  *
@@ -70,6 +119,9 @@ function* getProfileSaga() {
 function* watchGetProfileSaga() {
   yield takeLatest(getProfile, getProfileSaga);
 }
+function* watchGetPlaylistsSaga() {
+  yield takeLatest(getPlaylists, getPlaylistsSaga);
+}
 
 /**
  *
@@ -77,6 +129,6 @@ function* watchGetProfileSaga() {
  *
  */
 
-const appSagas = [watchGetProfileSaga].map(fork);
+const appSagas = [watchGetProfileSaga, watchGetPlaylistsSaga].map(fork);
 
 export {appSagas};

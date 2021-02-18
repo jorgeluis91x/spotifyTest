@@ -7,8 +7,10 @@ import baseStyled, {
 const {width, height} = Dimensions.get('screen');
 
 const colors = {
-  primaryColor: '#FEF8F2',
+  backgroundColor: 'black',
+  primaryColor: '#F7933D',
   secoundaryColor: '#FD7F00',
+  white: '#FFFFFF',
   primaryText: '#706A65',
   secondaryText: '#A9A5A1',
   offWhite: '#F5F3EF',

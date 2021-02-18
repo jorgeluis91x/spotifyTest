@@ -25,7 +25,7 @@ const App = () => {
       <PersistGate persistor={persistor}>
         <ThemeProvider theme={theme}>
           <NavigationContainer>
-            <StatusBar barStyle="dark-content" backgroundColor="white" />
+            <StatusBar barStyle="light-content" backgroundColor="black" />
             <AppNavigation />
           </NavigationContainer>
         </ThemeProvider>
