@@ -1,5 +1,4 @@
-import React, {useContext, useEffect} from 'react';
-import {View} from 'react-native';
+import React, {useContext, useEffect, useState} from 'react';
 import {useDispatch} from 'react-redux';
 import Text from '../../components/text';
 import {useTypedSelector} from '../../hooks/use-typed-selector';
@@ -13,15 +12,18 @@ import {
   PlaylistsContainer,
   Playlist,
   ImagePlaylist,
+  SearchInput,
+  PrimaryButton,
 } from './style';
 import {ThemeContext} from '../../theme';
-import {Colors} from 'react-native/Libraries/NewAppScreen';
+import {TextInput} from 'react-native-gesture-handler';
 
-function MainScreen() {
+function MainScreen({navigation}) {
   const dispatch = useDispatch();
   const theme = useContext(ThemeContext);
   const profile = useTypedSelector((state) => state.app.profile);
   const playlists = useTypedSelector((state) => state.app.playlists);
+  const [searchValue, setSearchValue] = useState('');
   useEffect(() => {
     dispatch(getProfile());
     dispatch(getPlaylists());
@@ -68,6 +70,37 @@ function MainScreen() {
       </ContainerProfile>
       <Text
         color={theme.colors.white}
+        size={theme.fontSize.h2 + 5}
+        marginVertical={15}>
+        {'Find the best music \nfor your banger'}
+      </Text>
+      <ContainerProfile>
+        <SearchInput>
+          <TextInput
+            style={{color: 'white'}}
+            placeholderTextColor={theme.colors.white + '80'}
+            selectionColor={theme.colors.white + '80'}
+            value={searchValue}
+            onChangeText={(text) => {
+              setSearchValue(text);
+            }}
+            placeholder={'search'}
+          />
+        </SearchInput>
+        <PrimaryButton
+          onPress={() => navigation.navigate('Search', {query: searchValue})}>
+          <Text
+            fontFamily={'bold'}
+            size={theme.fontSize.h4}
+            color={theme.colors.white}
+            alignSelf={'center'}>
+            Search
+          </Text>
+        </PrimaryButton>
+      </ContainerProfile>
+
+      <Text
+        color={theme.colors.white}
         size={theme.fontSize.h1}
         marginVertical={15}
         alignSelf={'center'}
@@ -77,7 +110,10 @@ function MainScreen() {
       <PlaylistsContainer>
         {playlists?.map((item) => {
           return (
-            <Playlist>
+            <Playlist
+              onPress={() => {
+                navigation.navigate('Playlist', {playlist: item});
+              }}>
               <ImagePlaylist source={{uri: item.images[0].url}} />
               <Text
                 alignSelf={'center'}

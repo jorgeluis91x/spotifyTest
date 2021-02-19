@@ -1,6 +1,8 @@
 export type SpotifyState = {
   profile: Profile;
   playlists: any[];
+  playlistSelected: any;
+  searchResult: any;
 };
 
 export type Profile = {
@@ -14,6 +16,8 @@ export type Profile = {
 const spotifyInitialState: SpotifyState = {
   profile: {},
   playlists: [],
+  playlistSelected: {},
+  searchResult: [],
 };
 
 export {spotifyInitialState};

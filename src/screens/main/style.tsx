@@ -1,7 +1,6 @@
-import Text from '../../components/text';
 import {styled} from '../../theme';
 
-export const Container = styled.View`
+export const Container = styled.ScrollView`
     flex:1
     background-color: ${(props) => props.theme.colors.backgroundColor};
     padding: 15px;
@@ -27,6 +26,29 @@ export const TransparentButton = styled.TouchableOpacity`
   margin-vertical: 5px;
   width: 80px;
   justify-content: center;
+`;
+export const SearchInput = styled.View`
+  background-color: ${(props) => props.theme.colors.input};
+  border-width: 1px;
+  border-radius: 10px;
+  padding-vertical: 3px;
+  margin-vertical: 5px;
+  height: 40px;
+  flex: 1;
+  justify-content: center;
+  padding-horizontal: 10px;
+`;
+
+export const PrimaryButton = styled.TouchableOpacity`
+  background-color: ${(props) => props.theme.colors.primaryColor};
+  border-width: 1px;
+  border-radius: 10px;
+  padding-vertical: 3px;
+  margin-vertical: 5px;
+  height: 40px;
+  justify-content: center;
+  padding-horizontal: 10px;
+  margin-horizontal: 10px;
 `;
 export const PlaylistsContainer = styled.View`
   flex: 1;

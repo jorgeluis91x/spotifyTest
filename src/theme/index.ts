@@ -15,6 +15,7 @@ const colors = {
   secondaryText: '#A9A5A1',
   offWhite: '#F5F3EF',
   lightGrey: '#ECE7E0',
+  input: '#252525',
 };
 
 const fontSize = {
